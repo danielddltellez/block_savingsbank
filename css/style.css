@@ -1,0 +1,7 @@
+thead input {
+  width: 100%;
+}
+
+#main-content .theme-table-wrap.wider {
+width: 100% !important;
+}

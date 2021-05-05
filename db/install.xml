@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/savingsbank/db" VERSION="20190320" COMMENT="XMLDB file for Moodle blocks/savingsbank"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_savingsbank" COMMENT="Default comment for block_savingsbank, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="idusuario" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Id del usuario moodle, es la persona que emite el comentario"/>
+        <FIELD NAME="idcategoria" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="id de categoría"/>
+        <FIELD NAME="mensaje" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Cuerpo del mensaje"/>
+        <FIELD NAME="idestatus" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Id del estatus"/>
+        <FIELD NAME="fechacreacion" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Fecha de creación"/>
+        <FIELD NAME="fechamodificacion" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Fecha de actualización"/>
+        <FIELD NAME="visible" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Publicado o en borrador"/>
+        <FIELD NAME="fechavisible" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="fecha en que el usuario publica el comentario"/>
+        <FIELD NAME="idusermodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Id del estatus"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_savingsbank_resp" COMMENT="Tabla con las respuestas de a los comentarios">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="idcomentario" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="id del comentario"/>
+        <FIELD NAME="idpadre" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Id de la respuesta padre"/>
+        <FIELD NAME="idusuario" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="id del usuario que está dando respuesta"/>
+        <FIELD NAME="mensaje" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="cuerpo del mensaje"/>
+        <FIELD NAME="iddoc" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" COMMENT="id de documentos adjuntos"/>
+        <FIELD NAME="fechacreacion" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="fecha de creación"/>
+        <FIELD NAME="fechamodificacion" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Fecha de última actualización"/>
+        <FIELD NAME="visible" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Publicado o en borrador"/>
+        <FIELD NAME="fechavisible" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Fecha en que el usuario publica la respuesta"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_savingsbank_docs" COMMENT="tabla con documentos">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="fnombre" TYPE="char" LENGTH="60" NOTNULL="false" SEQUENCE="false" COMMENT="Nombre del archivo"/>
+        <FIELD NAME="contenido" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Contenido del archivo"/>
+        <FIELD NAME="tipo" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false" COMMENT="Tipo de archivo adjunto"/>
+        <FIELD NAME="fecha" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Fecha de creación"/>
+        <FIELD NAME="factualizacion" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Fecha de actuallización"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_savingsbank_estatus" COMMENT="Estados de los comentarios">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nombre" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false" COMMENT="Nombre del estatus"/>
+        <FIELD NAME="descripcion" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Descripción del estatus"/>
+        <FIELD NAME="fechacreacion" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Fecha de creación del estatus"/>
+        <FIELD NAME="idmodificador" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Id del usuario que actualiza"/>
+        <FIELD NAME="fechamodificacion" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Fecha de actualización"/>
+        <FIELD NAME="visible" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Estado activo o no activo"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_savingsbank_categoria" COMMENT="Categorías de los comentarios">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="idpadre" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Id de categoría padre"/>
+        <FIELD NAME="nombre" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false" COMMENT="Nombre de las categorías"/>
+        <FIELD NAME="descripcion" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false" COMMENT="Descripción de la categoría"/>
+        <FIELD NAME="fechacreacion" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Fecha de creación"/>
+        <FIELD NAME="idmodificador" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Id del usuario que modifica la categoría"/>
+        <FIELD NAME="fechamodificacion" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Fecha de actualización"/>
+        <FIELD NAME="visible" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="visible o no sobre la categoría"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_savingsbank_responsa" COMMENT="Responsables de administrar los comentarios">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="idusuario" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Id del usuario responsable"/>
+        <FIELD NAME="idcategoria" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Categoría asignada al responsable"/>
+        <FIELD NAME="fechacreacion" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Fecha de creación"/>
+        <FIELD NAME="idmodificador" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Id del usuario que actualizó"/>
+        <FIELD NAME="fechamodificacion" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Fecha de actualización"/>
+        <FIELD NAME="estatus" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Estado del permiso sobre la categoría asignada"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
