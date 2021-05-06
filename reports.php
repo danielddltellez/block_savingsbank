@@ -50,7 +50,7 @@ $PAGE->set_url('/blocks/savingsbank/reports.php', array('id' => $courseid));
 $PAGE->set_pagelayout('report');
 $PAGE->set_heading(get_string('edithtml', 'block_savingsbank'));
 
-$settingsnode = $PAGE->settingsnav->add('Caja de ahorro');
+$settingsnode = $PAGE->settingsnav->add('Portal RH');
 
 $sql="SELECT cor.id FROM {block_savingsbank_responsa} as cor WHERE cor.idusuario=? and cor.estatus=1";
 $resp=$DB->get_records_sql($sql,array($USER->id));
@@ -109,16 +109,34 @@ if($excel){
     <button name="buscar" type="submit">Buscar</button>
     </form>';
 }
-
-if (!empty($_POST['xnombre']) || !empty($_GET['xnombre'])){
+/*
+if ((!empty($_POST['xnombre']) || !empty($_GET['xnombre'])) && (empty($_POST['xestatus']) || empty($_GET['xestatus'])) && (empty($_POST['xfechainicio']) && empty($_POST['xfechafin']) || empty($_GET['xfechainicio']) && empty($_GET['xfechafin']))){
     $where="where co.id>0 and co.visible=1 and concat(u.firstname,' ',u.lastname) like '".$nombre."%' ORDER BY fechavisible ASC";
 }else if (!empty($_POST['xestatus']) || !empty($_GET['xestatus'])){
     $where="where co.id>0 and co.visible=1 and  es.id = '".$estatus."%' ORDER BY fechavisible ASC";
 }else if (!empty($_POST['xfechainicio']) && !empty($_POST['xfechafin']) || !empty($_GET['xfechainicio']) && !empty($_GET['xfechafin'])){
     $where="where co.id>0 and co.visible=1 and co.fechacreacion BETWEEN UNIX_TIMESTAMP('".$fechaini."') AND UNIX_TIMESTAMP('".$fechafin."') ORDER BY fechavisible ASC";
+}else if ((!empty($_POST['xnombre']) || !empty($_GET['xnombre'])) && (!empty($_POST['xestatus']) || !empty($_GET['xestatus']))){
+    $where="where co.id>0 and co.visible=1 and concat(u.firstname,' ',u.lastname) like '".$nombre."%' and  es.id = '".$estatus."%' ORDER BY fechavisible ASC";
+}else{
+    $where="where co.id>0 and co.visible=1 ORDER BY fechavisible ASC";
+}*/
+if ((!empty($nombre)) && (empty($estatus)) && (empty($fechaini) && empty($fechafin))){
+    $where="where co.id>0 and co.visible=1 and concat(u.firstname,' ',u.lastname) like '".$nombre."%' ORDER BY fechavisible ASC";
+}else if ((empty($nombre)) && (!empty($estatus)) && (empty($fechaini) && empty($fechafin))){
+    $where="where co.id>0 and co.visible=1 and  es.id = '".$estatus."%' ORDER BY fechavisible ASC";
+}else if ((empty($nombre)) && (empty($estatus)) && (!empty($fechaini) && !empty($fechafin))){
+    $where="where co.id>0 and co.visible=1 and co.fechacreacion BETWEEN UNIX_TIMESTAMP('".$fechaini."') AND UNIX_TIMESTAMP('".$fechafin." 23:55:00') ORDER BY fechavisible ASC";
+}else if ((!empty($nombre)) && (!empty($estatus)) && (empty($fechaini) && empty($fechafin))){
+    $where="where co.id>0 and co.visible=1 and concat(u.firstname,' ',u.lastname) like '".$nombre."%' and  es.id = '".$estatus."%' ORDER BY fechavisible ASC";
+}else if ((empty($nombre)) && (!empty($estatus)) && (!empty($fechaini) && !empty($fechafin))){
+    $where="where co.id>0 and co.visible=1 and co.fechacreacion BETWEEN UNIX_TIMESTAMP('".$fechaini."') AND UNIX_TIMESTAMP('".$fechafin." 23:55:00') and  es.id = '".$estatus."%' ORDER BY fechavisible ASC";
+}else if ((!empty($nombre)) && (!empty($estatus)) && (!empty($fechaini) && !empty($fechafin))){
+    $where="where co.id>0 and co.visible=1 and concat(u.firstname,' ',u.lastname) like '".$nombre."%' and co.fechacreacion BETWEEN UNIX_TIMESTAMP('".$fechaini."') AND UNIX_TIMESTAMP('".$fechafin." 23:55:00') and  es.id = '".$estatus."%' ORDER BY fechavisible ASC";
 }else{
     $where="where co.id>0 and co.visible=1 ORDER BY fechavisible ASC";
 }
+ 
  
 
 $sql="select co.id, u.id as userid, u.firstname, u.lastname, ca.id as idcat, ca.nombre as catname, co.mensaje, es.id as idestatus, es.nombre as estname, from_unixtime(co.fechacreacion,'%Y-%m-%d %H:%i') fechacreacion, from_unixtime(co.fechamodificacion,'%Y-%m-%d %H:%i') fechamodificacion, co.visible, from_unixtime(co.fechavisible,'%Y-%m-%d %H:%i') fechavisible FROM {block_savingsbank} as co

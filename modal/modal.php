@@ -40,7 +40,7 @@ $modalcancelacion='
         </p>
         <p>
         <label class="w3-text-tiii"><b>Estatus</b></label>
-        <select name="idestatus" class="w3-select">
+        <select name="idestatus" class="w3-select" required>
             <option value="" disabled selected>Selecciona una opción</option>
             <option value="2">Atendido</option>
             <option value="3">Cancelado</option>

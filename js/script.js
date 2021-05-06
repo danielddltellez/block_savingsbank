@@ -146,32 +146,37 @@ $(document).ready(function() {
   });
   $(document).ready(function() {
     // Setup - add a text input to each footer cell
-    $('#example thead tr').clone(true).appendTo( '#example thead' );
-    $('#example thead tr:eq(1) th').each( function (i) {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
+
+        $('#example thead tr').clone(true).appendTo( '#example thead' );
+        $('#example thead tr:eq(1) th').each( function (i) {
+            var title = $(this).text();
+            $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
+    
+            $( 'input', this ).on( 'keyup change', function () {
+                if ( table.column(i).search() !== this.value ) {
+                    table
+                        .column(i)
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        });
+        
+    
+
  
-        $( 'input', this ).on( 'keyup change', function () {
-            if ( table.column(i).search() !== this.value ) {
-                table
-                    .column(i)
-                    .search( this.value )
-                    .draw();
-            }
-        } );
+var table = $('#example').DataTable( {
+    orderCellsTop: true,
+    fixedHeader: true,
+    "responsive": true,
+    "language":{
+    "lengthMenu": "Mostrando _MENU_ registros por página",
+        "zeroRecords": "Nada que mostrar",
+        "info": "Mostrando página _PAGE_ de _PAGES_",
+        "infoFiltered": "(Coincidencias encontradas de _MAX_ registros)",
+        search: '', searchPlaceholder: "Buscar..."
+        }
     } );
- 
-    var table = $('#example').DataTable( {
-        orderCellsTop: true,
-        fixedHeader: true,
-        "language":{
-        "lengthMenu": "Mostrando _MENU_ registros por página",
-         "zeroRecords": "Nada que mostrar",
-         "info": "Mostrando página _PAGE_ de _PAGES_",
-         "infoFiltered": "(Coincidencias encontradas de _MAX_ registros)",
-         search: '', searchPlaceholder: "Buscar..."
-            }
-        } );
 } );
   
   

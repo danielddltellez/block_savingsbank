@@ -39,52 +39,42 @@ function block_savingsbank_print_questions($questions, $urlform, $jefe = 0, $ret
     $display .= html_writer::end_tag('div');
     $display .= html_writer::end_tag('div');
 	*/
-	$display .= html_writer::start_tag('div', array('class'=>'w3-responsive'));
+	$display .= html_writer::start_tag('div', array('class'=>'w3-container'));
 	$categoria="";
 
-    $display .= html_writer::start_tag('table', array('id'=>'example','class'=>'display','style'=>'width:100% !important'));
-    if(count($questions)>0){
-        
-    $esql="SELECT co.id, u.id as userid, u.firstname, u.lastname, ca.id as idcat, ca.nombre as catname, es.id as idestatus, es.nombre as estname, from_unixtime(co.fechacreacion,'%Y-%m-%d %H:%i') fechacreacion, from_unixtime(co.fechamodificacion,'%Y-%m-%d %H:%i') fechamodificacion, co.visible, from_unixtime(co.fechavisible,'%Y-%m-%d %H:%i') fechavisible FROM {block_savingsbank} as co
-    LEFT JOIN {block_savingsbank_categoria} as ca ON co.idcategoria=ca.id
-    LEFT JOIN {block_savingsbank_estatus} as es ON co.idestatus=es.id
-    LEFT JOIN {user} as u ON co.idusuario=u.id
-    WHERE u.id=? and co.idestatus =1 ORDER BY fechavisible ASC"; 
+    $display .= html_writer::start_tag('table', array('id'=>'example','class'=>'display','style'=>'width:95% !important'));
+        if(count($questions)>0){
+            
+        $esql="SELECT co.id, u.id as userid, u.firstname, u.lastname, ca.id as idcat, ca.nombre as catname, es.id as idestatus, es.nombre as estname, from_unixtime(co.fechacreacion,'%Y-%m-%d %H:%i') fechacreacion, from_unixtime(co.fechamodificacion,'%Y-%m-%d %H:%i') fechamodificacion, co.visible, from_unixtime(co.fechavisible,'%Y-%m-%d %H:%i') fechavisible FROM {block_savingsbank} as co
+        LEFT JOIN {block_savingsbank_categoria} as ca ON co.idcategoria=ca.id
+        LEFT JOIN {block_savingsbank_estatus} as es ON co.idestatus=es.id
+        LEFT JOIN {user} as u ON co.idusuario=u.id
+        WHERE u.id=? and co.idestatus =1 ORDER BY fechavisible ASC"; 
 
-    
-    $validacaja=$DB->get_records_sql($esql,array($USER->id));
-    if(empty($validacaja)){
-        if(empty($jefe)){
-        block_savingsbank_print_buttom_new_question($urlform);
+        
+        $validacaja=$DB->get_records_sql($esql,array($USER->id));
+        if(empty($validacaja)){
+            if(empty($jefe)){
+            block_savingsbank_print_buttom_new_question($urlform);
+            }
         }
-    }
 
         $display .= html_writer::start_tag('thead');
         $display .= html_writer::start_tag('tr');
-        $display .= html_writer::start_tag('th', array('scope'=>'col'));
-        $display .= clean_text('#');
+        $display .= html_writer::start_tag('th');
+        $display .= clean_text('Folio');
         $display .= html_writer::end_tag('th');
-        $display .= html_writer::start_tag('th', array('scope'=>'col'));
+        $display .= html_writer::start_tag('th');
         $display .= clean_text('Nombre');
         $display .= html_writer::end_tag('th');
-        /*
-        $display .= html_writer::start_tag('th', array('scope'=>'col'));
-        $display .= clean_text('Asunto');
-        $display .= html_writer::end_tag('th');
-        */
-        /*
-        $display .= html_writer::start_tag('th', array('scope'=>'col'));
-        $display .= clean_text('Descripción');
-        $display .= html_writer::end_tag('th');
-        */
-        $display .= html_writer::start_tag('th', array('scope'=>'col'));
+        $display .= html_writer::start_tag('th');
         $display .= clean_text('Categoria');
         $display .= html_writer::end_tag('th');
-        $display .= html_writer::start_tag('th', array('scope'=>'col'));
+        $display .= html_writer::start_tag('th');
         $display .= clean_text('Estatus');
         $display .= html_writer::end_tag('th');
-        $display .= html_writer::start_tag('th', array('scope'=>'col'));
-        $display .= clean_text('Fecha');
+        $display .= html_writer::start_tag('th');
+        $display .= clean_text('Fecha publicación');
         $display .= html_writer::end_tag('th');
         $display .= html_writer::end_tag('tr');
         $display .= html_writer::end_tag('thead');
@@ -96,9 +86,9 @@ function block_savingsbank_print_questions($questions, $urlform, $jefe = 0, $ret
             if($question->visible==0){ // Se muestra registro si el comentario es mio y no está publicado
                 if($question->userid==$USER->id){
                     $display .= html_writer::start_tag('tr');
-                    $display .= html_writer::start_tag('th', array('scope'=>'row'));
+                    $display .= html_writer::start_tag('td');
                     $display .= clean_text($question->id);
-                    $display .= html_writer::end_tag('th');
+                    $display .= html_writer::end_tag('td');
                         
                     $pageparam = array('blockid' => $blockid, 'courseid' => $courseid, 'idcomentario' => $question->id, 'idpadre' => 0, 'viewpage'=>1, 'id' => $question->id);
                     //Lucius - URL para modificar configuración de solicitud
@@ -107,16 +97,6 @@ function block_savingsbank_print_questions($questions, $urlform, $jefe = 0, $ret
                     $display .= clean_text($question->firstname.' '.$question->lastname);
                     $display .= html_writer::link($editurl,html_writer::tag('i', '&nbsp;&nbsp;', array('class' => 'fa fa-pencil fa-fw fa-lg', 'aria-hidden' => 'true', 'title'=> 'Continuar editando')));
                     $display .= html_writer::end_tag('td');
-
-                    /*
-                    $display .= html_writer::start_tag('td');
-                    $display .= clean_text($question->asunto.' ');
-                    //$display .= html_writer::link($editurl,clean_text($question->asunto, array('title'=> 'Ver seguimiento')));
-                    $display .= html_writer::end_tag('td');
-                    $display .= html_writer::start_tag('td');
-                    $submen = substr($question->mensaje, 0, 20 );
-                    $display .= clean_text($submen);
-                    $display .= html_writer::end_tag('td');*/
                     $display .= html_writer::start_tag('td');
                     $display .= clean_text($question->catname);
                     $display .= html_writer::end_tag('td');
@@ -130,9 +110,9 @@ function block_savingsbank_print_questions($questions, $urlform, $jefe = 0, $ret
                 }
             }else{
                 $display .= html_writer::start_tag('tr');
-                $display .= html_writer::start_tag('th', array('scope'=>'row'));
+                $display .= html_writer::start_tag('td');
                 $display .= clean_text($question->id);
-                $display .= html_writer::end_tag('th');
+                $display .= html_writer::end_tag('td');
                 $pageparam = array('blockid' => $blockid, 'courseid' => $courseid, 'idcomentario' => $question->id, 'idpadre' => 0, 'viewpage'=>1);
                 //Lucius - URL para modificar configuración de artículo
                 $editurl = new moodle_url('/blocks/savingsbank/seguimiento.php', $pageparam);
@@ -172,7 +152,7 @@ function block_savingsbank_print_question($question, $return = false) {
     
     //$url="";
     $display .= html_writer::start_tag('div', array('class'=>'col-md-12 articulo'));
-    $display .= $OUTPUT->heading('Caja de ahorro');    
+    $display .= $OUTPUT->heading('Portal RH');    
    /* $display .= html_writer::start_tag('div',array('style' => 'text-align: left'));
     $display .= clean_text('<strong>Folio: </strong>'.$question->id.'<br><strong>Categoría: </strong>'.$question->categoriapadre.'<br><strong>Subcategoria: </strong>'.$question->categoria.'<br><strong>Autor: </strong>'.$question->firstname.' '.$question->lastname.'<br><strong>Fecha:</strong> '.$question->fechavisible);
     $display .= html_writer::end_tag('div');
@@ -229,7 +209,7 @@ function block_savingsbank_print_question($question, $return = false) {
         $display .= clean_text('<p><b>Autor: </b>'.$question->firstname.' '.$question->lastname.'</p>');
         }
         $display .= clean_text('<p><b>Fecha comentario: </b>'.$question->fechavisible.'</p>');
-        $display .= clean_text('<p><b>Mensaje: </b>'.$question->mensaje.'</p>');
+        $display .= clean_text('<p><b>Mensaje: </b><strong>'.$question->mensaje.'</strong></p>');
         $display .= html_writer::end_tag('div');
     }
     $display .= html_writer::end_tag('div');
@@ -422,35 +402,35 @@ function block_savingsbank_send_notification($idfolio,$emailu){
     $question = $DB->get_record_sql($sqlqn, array($idfolio));
   
     if($question->idpadre==1){
-        $mensaje .= '<div>';
-        $mensaje .= '<p><b>Categoria: </b>'.$question->categoriapadre.'</p>';
-        $mensaje .= '<p><b>Sub Categoria: </b>'.$question->categoria.'</p>';
-        $mensaje .= '<p>La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.</p>';
-        $mensaje .= '<p>Por medio del presente, confirmo que es mi voluntad <b>generar un ahorro voluntario</b> en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se <b>retenga</b> de mi sueldo mensual el '.$question->categoria.' y conozco que el % determinado me será descontado de manera CATORCENAL.</p>';
-        $mensaje .= '<p>Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.'  para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.</p>';
-        $mensaje .= '<p>La cantidad total que se acumule por el total de estas retenciones, me será entregada en diciembre de cada año o al momento de la terminación laboral con la empresa.</p>';
-        $mensaje .= '<p>Te recordamos, que una vez enviado tu formato, la retención iniciará en la primera catorcena del siguiente mes a la fecha en que hayas enviado tu solicitud.</p>';
-        $mensaje .= '</div>';
+        $mensaje .= 'Colaborador: '.$question->firstname.' '.$question->lastname.'';
+        $mensaje .= 'Categoria: '.$question->categoriapadre.'';
+        $mensaje .= 'Sub Categoria: '.$question->categoria.'';
+        /*$mensaje .= 'La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.';
+        $mensaje .= 'Por medio del presente, confirmo que es mi voluntad generar un ahorro voluntario en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se retenga de mi sueldo mensual el '.$question->categoria.' y conozco que el % determinado me será descontado de manera CATORCENAL.';
+        $mensaje .= 'Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.'  para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.';
+        $mensaje .= 'La cantidad total que se acumule por el total de estas retenciones, me será entregada en diciembre de cada año o al momento de la terminación laboral con la empresa.';
+        $mensaje .= 'Te recordamos, que una vez enviado tu formato, la retención iniciará en la primera catorcena del siguiente mes a la fecha en que hayas enviado tu solicitud.';
+        */
     }else if($question->idpadre==2){
-        $mensaje .= '<div>';
-        $mensaje .= '<p><b>Categoria: </b>'.$question->categoriapadre.'</p>';
-        $mensaje .= '<p><b>Sub Categoria: </b>'.$question->categoria.'</p>';
-        $mensaje .= '<p>La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.</p>';
-        $mensaje .= '<p>Por medio del presente, confirmo que es mi voluntad <b>generar un ahorro voluntario</b> en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se <b>modifique</b> el % que se me retiene de mi sueldo mensual por el siguiente '.$question->categoria.' y conozco que el % determinado me será descontado de manera CATORCENAL.</p>';
-        $mensaje .= '<p>Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.' para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.</p>';
-        $mensaje .= '<p>La cantidad total que se acumule por el total de estas retenciones, me será entregada en diciembre de cada año o al momento de la terminación laboral con la empresa.</p>';
-        $mensaje .= '<p>Te recordamos, que una vez enviado tu formato, el cambio se aplicará en la primera catorcena del siguiente mes a la fecha en que hayas enviado tu solicitud.</p>';
-        $mensaje .= '</div>';
+        $mensaje .= 'Colaborador: '.$question->firstname.' '.$question->lastname.'';
+        $mensaje .= 'Categoria: '.$question->categoriapadre.'';
+        $mensaje .= 'Sub Categoria: '.$question->categoria.'';
+        /*$mensaje .= 'La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.';
+        $mensaje .= 'Por medio del presente, confirmo que es mi voluntad generar un ahorro voluntario en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se modifique el % que se me retiene de mi sueldo mensual por el siguiente '.$question->categoria.' y conozco que el % determinado me será descontado de manera CATORCENAL.';
+        $mensaje .= 'Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.' para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.';
+        $mensaje .= 'La cantidad total que se acumule por el total de estas retenciones, me será entregada en diciembre de cada año o al momento de la terminación laboral con la empresa.';
+        $mensaje .= 'Te recordamos, que una vez enviado tu formato, el cambio se aplicará en la primera catorcena del siguiente mes a la fecha en que hayas enviado tu solicitud.';
+        */
     }else if($question->idpadre==3){
-        $mensaje .= '<div>';
-        $mensaje .= '<p><b>Categoria: </b>'.$question->categoriapadre.'</p>';
-        $mensaje .= '<p><b>Sub Categoria: </b>'.$question->categoria.'</p>';
-        $mensaje .= '<p>La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.</p>';
-        $mensaje .= '<p>Manifiesto mi consentimiento para que se <b>detenga la retención</b> del % actual de mi sueldo mensual por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga</p>';
-        $mensaje .= '<p>Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.' para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.</p>';
-        $mensaje .= '<p>Confirmo que sólo me será entregada en diciembre o al momento de la terminación laboral con la empresa la cantidad total que acumulé por el total de estas retenciones hasta el último día del mes de esta solicitud.</p>';
-        $mensaje .= '<p>Te recordamos, que una vez enviado tu formato, <b>el descuento se detendrá hasta la primera catorcena del siguiente mes</b> a la fecha en que hayas enviado tu solicitud.</p>';
-        $mensaje .= '</div>';
+        $mensaje .= 'Colaborador: '.$question->firstname.' '.$question->lastname.'';
+        $mensaje .= 'Categoria: '.$question->categoriapadre.'';
+        $mensaje .= 'Sub Categoria: '.$question->categoria.'';
+        /*$mensaje .= 'La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.';
+        $mensaje .= 'Manifiesto mi consentimiento para que se detenga la retención del % actual de mi sueldo mensual por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga';
+        $mensaje .= 'Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.' para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.';
+        $mensaje .= 'Confirmo que sólo me será entregada en diciembre o al momento de la terminación laboral con la empresa la cantidad total que acumulé por el total de estas retenciones hasta el último día del mes de esta solicitud.';
+        $mensaje .= 'Te recordamos, que una vez enviado tu formato, el descuento se detendrá hasta la primera catorcena del siguiente mes a la fecha en que hayas enviado tu solicitud.';
+        */
 
     }else{
 
@@ -458,7 +438,7 @@ function block_savingsbank_send_notification($idfolio,$emailu){
     
     /*$fechaap=date("d-m-Y H:i:s");
     $newlink = str_replace("&amp;", "&", $courseurl);*/
-    $subjectNew="Nueva solicitud";
+    $subjectNew="Nueva solicitud de caja de ahorro";
     $emailu=(string)$emailu;
     //$mensaje1= "Hola, \n\n se ha registrado una nueva solicitud con el folio No. $idfolio con fecha $fechaap ,ingresa por favor a darle seguimiento.\n\nLink:";
 
@@ -501,23 +481,32 @@ function block_savingsbank_send_notification_cancelacion($idfolio){
     WHERE co.id=? GROUP BY co.id, u.id";
     $question = $DB->get_record_sql($sqlqn, array($idfolio));
     
-    $mensaje .= '<div>';
-    $mensaje .= '<p><b>Categoria: </b>'.$question->categoriapadre.'</p>';
-    $mensaje .= '<p><b>Sub Categoria: </b>'.$question->categoria.'</p>';
-    $mensaje .= '<p>El folio '.$idfolio.' ha sido cancelado</p>';
-    $mensaje .= '</div>';
+    $mensaje = 'Colaborador: '.$question->firstname.' '.$question->lastname.'
+                Categoria: '.$question->categoriapadre.'
+                Sub Categoria: '.$question->categoria.'
+                El folio '.$idfolio.' ha sido cancelado';
     /*
     $fechaap=date("d-m-Y H:i:s");
     $newlink = str_replace("&amp;", "&", $courseurl);*/
-    $subjectNew="cancelacion de solicitud";
-    $emailu='daniel.delaluz@3ti.mx';
+    $subjectNew="Cancelación de solicitud de caja de ahorro";
+    $sqladmin="SELECT sr.id, u.email as correoelectronico
+    from {block_savingsbank_responsa} sr
+    join {user} u on u.id=sr.idusuario where sr.estatus=?";
+    $respadmin = $DB->get_records_sql($sqladmin, array(1));
+    
+    
 
     //$mensaje1= "Hola, \n\n se ha registrado una nueva solicitud con el folio No. $idfolio con fecha $fechaap ,ingresa por favor a darle seguimiento.\n\nLink:";
 
        // $link = str_replace("&amp;", "&", $courseurl);
-        $link = 'https://www.portal3i.mx/openlms/tripleI.php?key='.base64_encode("email=$emailu&courseid=1");
-        $parametros=array();
-        $clienteSOAP = new SoapClient('http://192.168.14.30:8080/svcELearning.svc?wsdl');
+
+        foreach($respadmin as $values){
+            $ids=$values->id;
+            $emailu=$values->correoelectronico;
+            $emailu=(string)$emailu;
+            $link = 'https://www.portal3i.mx/openlms/tripleI.php?key='.base64_encode("email=$emailu&courseid=1");
+            $parametros=array();
+            $clienteSOAP = new SoapClient('http://192.168.14.30:8080/svcELearning.svc?wsdl');
         try{
             //parametros de la llamada para envio notificacion por email
             $parametros['mensaje']= $mensaje."~$link~";
@@ -530,8 +519,9 @@ function block_savingsbank_send_notification_cancelacion($idfolio){
             $result = $clienteSOAP->Notificacion($parametros);
             $statusfinal = $result->envioNotificacionUsuarioResult;
         }catch(SoapFault $e){
-             var_dump($e);
+           //  var_dump($e);
         }
+    }
     
 
 
@@ -550,13 +540,13 @@ function block_savingsbank_send_notification_aprobacion($idfolio,$idestatus){
     WHERE co.id=? GROUP BY co.id, u.id";
     $question = $DB->get_record_sql($sqlqn, array($idfolio));
     if($idestatus==2){
-        $mensaje .= '<div>';
-        $mensaje .= '<p>Tu folio '.$idfolio.' ha sido aprobado por recursos humanos</p>';
-        $mensaje .= '</div>';
+
+        $mensaje .= 'Tu folio '.$idfolio.' ha sido aprobado por recursos humanos.';
+
     }else if($idestatus==3){
-        $mensaje .= '<div>';
-        $mensaje .= '<p>Tu folio '.$idfolio.' ha sido cancelado por recursos humanos</p>';
-        $mensaje .= '</div>';
+
+        $mensaje .= 'Tu folio '.$idfolio.' ha sido cancelado por recursos humanos.';
+
 
     }else{
         

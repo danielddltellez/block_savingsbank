@@ -21,6 +21,7 @@
                 //print_r($resp);
                 if (count($resp)>0) {
                     $url = new moodle_url('/blocks/savingsbank/view.php', array('blockid' => $this->instance->id, 'courseid' => $COURSE->id, 'id' => 0, 'viewpage' => 1));
+                    $this->content->text .= html_writer::start_tag('br');
                     $this->content->text .= html_writer::start_tag('li');
                     $this->content->text .= html_writer::link($url, 'Seguimiento a solicitudes');
                     $this->content->text .= html_writer::end_tag('li');
@@ -29,13 +30,14 @@
                     $this->content->text .= html_writer::start_tag('li');
                     $this->content->text .= html_writer::link($urlreport, 'Administración');
                     $this->content->text .= html_writer::end_tag('li');
+                    $this->content->text .= html_writer::start_tag('br');
                 }else{
                     $url = new moodle_url('/blocks/savingsbank/view.php', array('blockid' => $this->instance->id, 'courseid' => $COURSE->id, 'id' => 0, 'viewpage' => 1));
+                    $this->content->text .= html_writer::start_tag('br');
                     $this->content->text .= html_writer::start_tag('li');
                     $this->content->text .= html_writer::link($url, get_string('addpage', 'block_savingsbank'));
                     $this->content->text .= html_writer::end_tag('li');
                     $this->content->text .= html_writer::start_tag('br');
-                    $this->content->text .= html_writer::end_tag('br');
 
 
                     //Crea nueva queja

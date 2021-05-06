@@ -29,7 +29,7 @@ $PAGE->set_url('/blocks/savingsbank/seguimiento.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading(get_string('edithtml', 'block_savingsbank'));
 
-$settingsnode = $PAGE->settingsnav->add('Caja de ahorro');
+$settingsnode = $PAGE->settingsnav->add('Portal RH');
 
 //Es administrador de reportes
 $sql="SELECT cor.id FROM {block_savingsbank_responsa} as cor WHERE cor.idusuario=? and cor.estatus=1";
@@ -45,7 +45,7 @@ if (count($resp)>0) {
     $editnode = $settingsnode->add('Reportes', $urlreports);
 }else{
 
-    $editurl = new moodle_url('/blocks/savingsbank/seguimiento.php', array('id' => $id, 'courseid' => $courseid, 'blockid' => $blockid, 'viewpage' => 1));
+    $editurl = new moodle_url('/blocks/savingsbank/seguimiento.php', array('id' => $id, 'courseid' => $courseid, 'blockid' => $blockid,'idcomentario' => $idcomentario, 'viewpage' => 1));
     $editnode = $settingsnode->add(get_string('mycomments', 'block_savingsbank'), $editurl);
     $editnode->make_active();
     

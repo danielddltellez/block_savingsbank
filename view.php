@@ -27,7 +27,7 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_heading(get_string('edithtml', 'block_savingsbank'));
 
 //$settingsnode = $PAGE->settingsnav->add(get_string('simplehtmlsettings', 'block_savingsbank'));
-$settingsnode = $PAGE->settingsnav->add('Caja de ahorro');
+$settingsnode = $PAGE->settingsnav->add('Portal RH');
 $editurl = new moodle_url('/blocks/savingsbank/view.php', array('id' => $id, 'courseid' => $courseid, 'blockid' => $blockid, 'viewpage' => 1));
 
 //Es administrador de reportes

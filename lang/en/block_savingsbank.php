@@ -23,12 +23,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Caja de ahorro';
-$string['comments'] = 'Caja de ahorro';
+$string['pluginname'] = 'Portal RH';
+$string['comments'] = 'Portal RH';
 $string['blockstring'] = 'body';
-$string['configtitle'] = 'Caja de ahorro';
-$string['addpage'] = 'Mi caja de ahorro';
+$string['configtitle'] = 'Portal RH';
+$string['addpage'] = 'Nueva solicitud';
 $string['blocktitle'] = 'Título';
 $string['textfields'] = 'Formulario';
 $string['edithtml'] = 'Editando vista';
-$string['mycomments'] = 'Mi caja de ahorro';
+$string['mycomments'] = 'Nueva solicitud';
