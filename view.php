@@ -34,7 +34,7 @@ $editurl = new moodle_url('/blocks/savingsbank/view.php', array('id' => $id, 'co
 $sql="SELECT cor.id FROM {block_savingsbank_responsa} as cor WHERE cor.idusuario=? and cor.estatus=1";
 $resp=$DB->get_records_sql($sql,array($USER->id));
 if (count($resp)>0) {
-    $editnode = $settingsnode->add('Seguimiento a solicitud', $editurl);
+    $editnode = $settingsnode->add('Seguimiento a solicitudes', $editurl);
     $editnode->make_active();
     //if (user_has_role_assignment($USER->id, 1) || is_siteadmin()) {
         //Enlace a Reportes

@@ -44,8 +44,9 @@ if (count($resp)>0) {
     $urlreports = new moodle_url('/blocks/savingsbank/reports.php', array('courseid' => $courseid, 'blockid'=>$blockid, id=>$id, 'viewpage'=>$viewpage));
     $editnode = $settingsnode->add('Reportes', $urlreports);
 }else{
+    $editurl = new moodle_url('/blocks/savingsbank/view.php', array('courseid' => $courseid, 'blockid' => $blockid, 'id' => 0,'viewpage' => 1));
 
-    $editurl = new moodle_url('/blocks/savingsbank/seguimiento.php', array('id' => $id, 'courseid' => $courseid, 'blockid' => $blockid,'idcomentario' => $idcomentario, 'viewpage' => 1));
+    //$editurl = new moodle_url('/blocks/savingsbank/seguimiento.php', array('id' => $id, 'courseid' => $courseid, 'blockid' => $blockid,'idcomentario' => $idcomentario, 'viewpage' => 1));
     $editnode = $settingsnode->add(get_string('mycomments', 'block_savingsbank'), $editurl);
     $editnode->make_active();
     

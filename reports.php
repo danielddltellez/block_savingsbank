@@ -58,7 +58,7 @@ $resp=$DB->get_records_sql($sql,array($USER->id));
 if (count($resp)>0) {
     //Enlace a Mis comentarios
     $url = new moodle_url('/blocks/savingsbank/view.php', array('blockid' => $blockid, 'courseid' => $COURSE->id, 'id' => 0, 'viewpage' => 1));
-    $editnode = $settingsnode->add('Seguimiento a Quejas', $url);
+    $editnode = $settingsnode->add('Seguimiento a solicitudes', $url);
     $urlreport = new moodle_url('/blocks/savingsbank/reports.php', array('blockid' => $blockid, 'courseid' => $COURSE->id, 'id' => '0', 'viewpage' => '1'));
     $editnode = $settingsnode->add('Reportes', $urlreports);
     $editnode->make_active();
