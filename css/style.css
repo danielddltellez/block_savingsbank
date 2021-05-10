@@ -5,7 +5,11 @@ thead input {
 #main-content .theme-table-wrap.wider {
 width: 100% !important;
 }
+#main-content .theme-table-wrap {
 
+  background-color: transparent !important;
+
+}
 @media only screen and (max-width: 600px) {
   #example > thead > tr > th > input{
 
@@ -22,3 +26,4 @@ width: 100% !important;
 b, strong {
   font-weight: bold !important;
 }
+

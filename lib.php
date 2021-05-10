@@ -152,7 +152,7 @@ function block_savingsbank_print_question($question, $return = false) {
     
     //$url="";
     $display .= html_writer::start_tag('div', array('class'=>'col-md-12 articulo'));
-    $display .= $OUTPUT->heading('Portal RH');    
+   // $display .= $OUTPUT->heading('Portal RH');    
    /* $display .= html_writer::start_tag('div',array('style' => 'text-align: left'));
     $display .= clean_text('<strong>Folio: </strong>'.$question->id.'<br><strong>Categoría: </strong>'.$question->categoriapadre.'<br><strong>Subcategoria: </strong>'.$question->categoria.'<br><strong>Autor: </strong>'.$question->firstname.' '.$question->lastname.'<br><strong>Fecha:</strong> '.$question->fechavisible);
     $display .= html_writer::end_tag('div');
@@ -167,7 +167,7 @@ function block_savingsbank_print_question($question, $return = false) {
         $display .= clean_text('<p><b>Fecha: </b>'.$question->fechacreacion.'</p>');
         $display .= clean_text('<p><b>Estatus: </b>'.$question->estatus.'</p>');
         $display .= clean_text('<p>La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.</p>');
-        $display .= clean_text('<p>Por medio del presente, confirmo que es mi voluntad <b>generar un ahorro voluntario</b> en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se <b>retenga</b> de mi sueldo mensual el '.$question->categoria.' y conozco que el % determinado me será descontado de manera CATORCENAL.</p>');
+        $display .= clean_text('<p>Por medio del presente, confirmo que es mi voluntad <b>generar un ahorro voluntario</b> en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se <b>retenga</b> de mi sueldo mensual el <b>'.$question->categoria.' </b>y conozco que el % determinado me será descontado de manera CATORCENAL.</p>');
         $display .= clean_text('<p>Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.'  para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.</p>');
         $display .= clean_text('<p>La cantidad total que se acumule por el total de estas retenciones, me será entregada en diciembre de cada año o al momento de la terminación laboral con la empresa.</p>');
         $display .= clean_text('<p>Te recordamos, que una vez enviado tu formato, la retención iniciará en la primera catorcena del siguiente mes a la fecha en que hayas enviado tu solicitud.</p>');
@@ -180,7 +180,7 @@ function block_savingsbank_print_question($question, $return = false) {
         $display .= clean_text('<p><b>Fecha: </b>'.$question->fechacreacion.'</p>');
         $display .= clean_text('<p><b>Estatus: </b>'.$question->estatus.'</p>');
         $display .= clean_text('<p>La Caja de Ahorro es un beneficio opcional que te permite generar un ahorro voluntario decidiendo el % que deseas destinar y que te será entregado al final de año.</p>');
-        $display .= clean_text('<p>Por medio del presente, confirmo que es mi voluntad <b>generar un ahorro voluntario</b> en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se <b>modifique</b> el % que se me retiene de mi sueldo mensual por el siguiente '.$question->categoria.' y conozco que el % determinado me será descontado de manera CATORCENAL.</p>');
+        $display .= clean_text('<p>Por medio del presente, confirmo que es mi voluntad <b>generar un ahorro voluntario</b> en la Caja de Ahorro, por lo que, manifiesto mi consentimiento para que se <b>modifique</b> el % que se me retiene de mi sueldo mensual por el siguiente <b>'.$question->categoria.'</b> y conozco que el % determinado me será descontado de manera CATORCENAL.</p>');
         $display .= clean_text('<p>Doy mi consentimiento a la empresa '.$question->pagadoraprincipal.' y '.$question->pagadorasecundaria.' para retener dicho % por concepto de Caja de Ahorro, como un beneficio adicional que le empresa me otorga.</p>');
         $display .= clean_text('<p>La cantidad total que se acumule por el total de estas retenciones, me será entregada en diciembre de cada año o al momento de la terminación laboral con la empresa.</p>');
         $display .= clean_text('<p>Te recordamos, que una vez enviado tu formato, el cambio se aplicará en la primera catorcena del siguiente mes a la fecha en que hayas enviado tu solicitud.</p>');

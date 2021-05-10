@@ -48,10 +48,10 @@ $modalcancelacion='
     </p>
         <div class="w3-container w3-row w3-padding">
           <div class="w3-col w3-left-align s6">
-            <p><button type="reset" class="w3-btn w3-green" id="cancelar">Cancelar</button></p>
+            <p><button type="reset" class="w3-btn w3-red" id="cancelar">Cancelar</button></p>
           </div>
           <div class="w3-col w3-right-align s6">
-              <input type="submit" id="btnatendido" name="btnatendido" class="w3-btn w3-red" value="Registrar comentario">
+              <input type="submit" id="btnatendido" name="btnatendido" class="w3-btn w3-green" value="Registrar comentario">
           </div>
         </div>
              </form>

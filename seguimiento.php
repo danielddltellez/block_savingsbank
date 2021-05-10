@@ -88,23 +88,41 @@ LEFT JOIN {user_info_field} f on f.id=d.fieldid
 WHERE co.id=? GROUP BY co.id, u.id";
 $question = $DB->get_record_sql($sqlqn, array($idcomentario));
     
-block_savingsbank_print_question($question);
-echo'<div>';
+
+echo'<div><br>';
 if($admin==1){
+    
     if($question->idestatus==1){
-    echo'<input type="button"  class="w3-btn w3-border" onclick="document.getElementById(\'atendido\').style.display=\'block\'" value="Registrar respuesta" style="background-color: #a2a3a1;">';
+        echo '<center>';
+        echo'<a onclick="document.getElementById(\'atendido\').style.display=\'block\'"><button type="button" class="w3-btn w3-border w3-green">Registrar respuesta</button></a>';
+        echo'<a href="'.$urlback.'"><button type="button" class="w3-btn w3-border w3-grey">Regresar</button></a>';
+        // echo'<input type="button"  class="w3-btn w3-border" onclick="document.getElementById(\'atendido\').style.display=\'block\'" value="Registrar respuesta" style="background-color: #a2a3a1;">';
+        echo '</center>';
+    }else{
+        echo'<a href="'.$urlback.'"><button type="button" class="w3-btn w3-border w3-grey">Regresar</button></a>';
     }// echo'<a href="'.$urlclose.'"><button type="button" class="w3-btn w3-border" onclick="document.getElementById(\'newnivel\').style.display=\'block\'">Atendido</button></a>';
-    echo'<a href="'.$urlback.'"><button type="button" class="w3-btn w3-border">Regresar</button></a>';
+
     echo $modalatendido;
+
 }else{
+
     if($question->idestatus==1){
-    echo'<input type="button"  class="w3-btn w3-border" onclick="document.getElementById(\'cancelacion\').style.display=\'block\'" value="¿Deseas cancelar la solicitud?" style="background-color: #a2a3a1;">';
+        echo '<center><h3>¿Deseas continuar con la solicitud?</h3>';
+        echo'<a href="'.$urlback.'"><button type="button" class="w3-btn w3-border w3-green">Continuar</button></a>';
+        echo'<a onclick="document.getElementById(\'cancelacion\').style.display=\'block\'"><button type="button" class="w3-btn w3-border w3-red">Cancelar</button></a><br></center>';
+
+        //echo'<input type="button"  class="w3-btn w3-border" onclick="document.getElementById(\'cancelacion\').style.display=\'block\'" value="¿Deseas cancelar la solicitud?" style="background-color: #a2a3a1;">';
+    }else{
+        echo'<a href="'.$urlback.'"><button type="button" class="w3-btn w3-border w3-gray">Regresar</button></a>';
+
+
     }
-    echo'<a href="'.$urlback.'"><button type="button" class="w3-btn w3-border">Regresar</button></a>';
+
     echo $modalcancelacion;
 
 }
 echo'</div>';
+block_savingsbank_print_question($question);
 
 
 

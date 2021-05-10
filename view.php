@@ -68,7 +68,7 @@ if($savingsbank->is_cancelled()) {//Lucius - is_cancelled() es una función defi
     redirect($courseurl);
     
 }else if ($fromform=$savingsbank->get_data()) { //Intenta guardar
-
+    $idcomentario='';
 	$fecha = new DateTime();
     $contextblock = CONTEXT_BLOCK::instance($blockid);
 	if ($fromform->id!=0) {//Lucius - Aquí actualiza registro en respuesta
@@ -125,6 +125,9 @@ if($savingsbank->is_cancelled()) {//Lucius - is_cancelled() es una función defi
           /*  if ($draftitemid = file_get_submitted_draft_itemid('filename')) {
                 file_save_draft_area_files($draftitemid, $contextblock->id, 'block_savingsbank', 'block_savingsbank', $last, array('subdirs' => false, 'maxfiles' => 1, 'accepted_types' => array('.png','.jpg','.pdf','.doc','.docx','.ppt','.pptx','.xls','.xlxs')));
             }*/
+            $pageparam = array('blockid' => $blockid, 'courseid' => $courseid, 'idcomentario' => $last, 'idpadre' => 0, 'viewpage'=>1);
+            //Lucius - URL para modificar configuración de artículo
+            $editurl = new moodle_url('/blocks/savingsbank/seguimiento.php', $pageparam);
             $sqladmin="SELECT sr.id, u.email as correoelectronico
             from {block_savingsbank_responsa} sr
             join {user} u on u.id=sr.idusuario where sr.estatus=?";
@@ -139,7 +142,7 @@ if($savingsbank->is_cancelled()) {//Lucius - is_cancelled() es una función defi
         
     }
 
-    redirect($courseurl);
+    redirect($editurl);
 
 }else {
 	if ($viewpage and $id=='0') { //Muestra todas las solicitud
@@ -197,5 +200,11 @@ if($savingsbank->is_cancelled()) {//Lucius - is_cancelled() es una función defi
     }
 }
 
+$btnregresa = new single_button(new moodle_url('/my'),'Regresar', $buttonadd, 'get');
+$btnregresa->class = 'regresar';
+$btnregresa->formid = 'regresar';
+echo '<br>';
+echo $OUTPUT->render($btnregresa);
+echo '<br>';
 echo $OUTPUT->footer();
 ?>

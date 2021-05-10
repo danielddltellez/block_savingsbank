@@ -5,6 +5,7 @@
  * and open the template in the editor.
  */
 require_once('../../config.php');
+require_once('./view/view.php');
 //require_once('./bootstrap-4/css/bootstrap.css');
 global $DB, $OUTPUT, $USER;
 
@@ -93,20 +94,41 @@ if($excel){
     $site = get_site();	
 	$renderer = $PAGE->get_renderer('block_savingsbank');
     echo $OUTPUT->header();
+  
 	echo $renderer->navigation('reports', $blockid, $courseid, $id, $viewpage);
-
+    echo $head;
     //$records=$DB->get_records_sql($sql);
-    echo'<form method="POST">
-    <input type="text" placeholder="Nombre..." name="xnombre"/>
-    <select name="xestatus">
-        <option value="">Estatus</option>
-        <option value="1">Nuevo</option>
-        <option value="2">Atendido</option>
-        <option value="3">Cancelado</option>
-    </select>
-    <input type="date" placeholder="Fecha Desde:"  name="xfechainicio"/>
-    <input type="date" laceholder="Hasta"  name="xfechafin"/>
-    <button name="buscar" type="submit">Buscar</button>
+    echo'<form method="POST" class="w3-container">
+    <div class="w3-row-padding">
+        <div class="w3-half">
+            <label for="nombre">Nombre del usuario</label>
+            <input type="text"  class="w3-select"  placeholder="Nombre..." name="xnombre"/>
+        </div>
+        <div class="w3-half">
+            <select  class="w3-input"  name="xestatus">
+                <option value="">Selecciona estatus</option>
+                <option value="1">Nuevo</option>
+                <option value="2">Atendido</option>
+                <option value="3">Cancelado</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="w3-row-padding">
+        <div class="w3-half">
+            <label for="start">Fecha publicación inicio:</label>
+            <input type="date"  class="w3-input"  placeholder="Fecha Desde:"  name="xfechainicio"/>
+        </div>
+        <div class="w3-half">
+            <label for="end">Fecha publicación fin:</label>
+            <input type="date"  class="w3-input"  laceholder="Hasta"  name="xfechafin"/>
+        </div>
+    </div>
+    <br>
+    <div class="w3-container">
+        <button  class="w3-button w3-green" name="buscar" type="submit">Buscar</button>
+    </div>
+    <br>
     </form>';
 }
 /*
